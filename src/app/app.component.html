@@ -1,7 +1,7 @@
 <mat-sidenav-container class="container">
   <!-- [(opened)]="opened" -->
   <mat-sidenav #sidenav
-               [(mode)]="over">
+               [mode]="'over'">
     <app-header [textToShow]="menus"></app-header>
   </mat-sidenav>
 
@@ -15,11 +15,10 @@
       <button class="navigation-items"
               *ngFor="let item of menus"
               mat-button
-              routerLink="{{ item.link }}">
+              [routerLink]="item.link">
         <mat-icon class="mr-1"> {{ item.icon }}</mat-icon>
         {{ item.title }}
       </button>
-
       <button class="navigation-icon"
               mat-icon-button
               (click)="sidenav.toggle()">
