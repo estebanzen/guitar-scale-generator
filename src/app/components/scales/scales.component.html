@@ -164,11 +164,10 @@
               <mat-form-field *ngFor="let cuerda of cuerdas; let i = index"
                               style="width: 40px; margin-right: 4px;">
                 <mat-label>Str. {{i+1}}</mat-label>
-                <mat-select [(ngModel)]="cuerda"
-                            (selectionChange)="cuerdas[i] = cuerda">
+                <mat-select [(ngModel)]="cuerdas[i]">
                   <mat-option *ngFor="let note of notes"
                               [value]="note.noteStr">
-                    {{note.noteStr}}
+                    {{ note.noteStr }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

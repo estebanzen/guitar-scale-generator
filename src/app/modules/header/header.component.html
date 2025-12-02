@@ -1,10 +1,8 @@
 <div class="header-container">
-  <button
-    class="item"
-    *ngFor="let item of textToShow"
-    mat-button
-    routerLink="{{ item.link }}"
-  >
+  <button class="item"
+          *ngFor="let item of textToShow"
+          mat-button
+          routerLink="{{ item.link }}">
     <mat-icon class="mr-1"> {{ item.icon }}</mat-icon>
     {{ item.title }}
   </button>

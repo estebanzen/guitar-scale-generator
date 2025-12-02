@@ -79,16 +79,16 @@ export class ScalesComponent implements OnInit {
 
 	cuerdas = ["E", "B", "G", "D", "A", "E"];
 
-	noteRootValue: string;
-	showGuitarOptions;
+	noteRootValue: any;
+	showGuitarOptions: any;
 
 	cantidadTrastes: number = 24;
-	cantidadTrastesArr = [];
-	showPianoOptions;
+	cantidadTrastesArr: any = [];
+	showPianoOptions: any;
 	showOptions = true;
 	sliderColor = "primary";
 	// cantidadCuerdas: number = 6;
-	puntitos = {
+	puntitos: any = {
 		3: 1,
 		5: 1,
 		7: 1,
@@ -101,10 +101,10 @@ export class ScalesComponent implements OnInit {
 		24: 2,
 	};
 
-	diapason = [];
+	diapason: any = [];
 
 	pianoCantidadTeclas: number = 22;
-	pianoTeclas = [];
+	pianoTeclas: any = [];
 
 	//#endregion vars
 
@@ -124,7 +124,7 @@ export class ScalesComponent implements OnInit {
 		return t.puntitos[nroTraste];
 	}
 
-	onClickNoteRoot(noteRootValue, index) {
+	onClickNoteRoot(noteRootValue: any, index: any) {
 		var t = this;
 
 		t.notes.forEach((childObj) => {
@@ -200,7 +200,7 @@ export class ScalesComponent implements OnInit {
 		var r = 0;
 
 		for (let i = 0; i < t.pianoCantidadTeclas; i++) {
-			var formatClassesCss = t.notes[r];
+			var formatClassesCss: any = t.notes[r];
 			formatClassesCss["classes"] = t.notes[r].noteStr
 				.toLowerCase()
 				.replace("#", "-s");
