@@ -127,34 +127,28 @@
             </mat-expansion-panel-header>
 
             <mat-card>
-              <mat-form-field *ngFor="let cuerda of cuerdas; let i = index" style="width: 40px; margin-right: 4px;">
-                <mat-label>Str. {{i+1}}</mat-label>
-                <mat-select [(ngModel)]="cuerdas[i]">
-                  <mat-option *ngFor="let note of notes" [value]="note.noteStr">
-                    {{ note.noteStr }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <div class="strings-container">
+                <mat-form-field *ngFor="let cuerda of cuerdas; let i = index" class="string-field">
+                  <mat-label>Str. {{i+1}}</mat-label>
+                  <mat-select [(ngModel)]="cuerdas[i]" (selectionChange)="diapasonConstructor()">
+                    <mat-option *ngFor="let note of notes" [value]="note.noteStr">
+                      {{ note.noteStr }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
 
-              <br>
-              <button mat-raised-button (click)="onClickAddString()" color="primary" style="margin-right: 15px;"
-                class="btn">
-                <mat-icon>add</mat-icon>
-                ADD
-              </button>
+              <div class="strings-actions">
+                <button mat-raised-button (click)="onClickAddString()" color="primary" class="btn">
+                  <mat-icon>add</mat-icon>
+                  ADD
+                </button>
 
-              <button mat-raised-button (click)="onClickDeleteString()" color="primary" style="margin-right: 15px;"
-                class="btn">
-                <mat-icon>delete</mat-icon>
-                DEL
-              </button>
-
-              <button [disabled]="!cantidadTrastes" mat-raised-button (click)="diapasonConstructor()" color="primary"
-                style="margin-right: 15px;" class="btn">
-                <mat-icon>send</mat-icon>
-                UPDATE
-              </button>
-
+                <button mat-raised-button (click)="onClickDeleteString()" color="primary" class="btn">
+                  <mat-icon>delete</mat-icon>
+                  DEL
+                </button>
+              </div>
             </mat-card>
 
           </mat-expansion-panel>

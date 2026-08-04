@@ -256,3 +256,23 @@ td.active.tonic span {
 		margin-right: 15px;
 	}
 }
+
+.strings-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px;
+	margin-bottom: 16px;
+
+	.string-field {
+		width: 95px;
+	}
+}
+
+.strings-actions {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+

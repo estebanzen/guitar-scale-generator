@@ -12,6 +12,11 @@
 
       <span class="navigation-spacer"></span>
 
+      <button mat-button (click)="collapseAllPanels()" style="margin-right: 8px;">
+        <mat-icon class="mr-1">unfold_less</mat-icon>
+        COLLAPSE ALL PANELS
+      </button>
+
       <button class="navigation-items"
               *ngFor="let item of menus"
               mat-button

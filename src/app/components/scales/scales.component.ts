@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { MatExpansionPanel } from "@angular/material/expansion";
+import { UiService } from "src/app/services/ui.service";
 
 @Component({
 	selector: "app-scales",
@@ -6,6 +8,8 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./scales.component.scss"],
 })
 export class ScalesComponent implements OnInit {
+	@ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
+
 	//#region vars
 
 	showGuitar: boolean = true;
@@ -109,7 +113,7 @@ export class ScalesComponent implements OnInit {
 	//#endregion vars
 
 	//#region methods
-	constructor() {
+	constructor(private uiService: UiService) {
 		console.clear();
 		var t = this;
 
@@ -117,7 +121,11 @@ export class ScalesComponent implements OnInit {
 		t.pianoConstructor();
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.uiService.collapseAll$.subscribe(() => {
+			this.collapseAllPanels();
+		});
+	}
 
 	renderPuntitosGuitarClassCss(nroTraste: number) {
 		var t = this;
@@ -227,11 +235,20 @@ export class ScalesComponent implements OnInit {
 	}
 
 	onClickAddString() {
-		this.cuerdas.push("");
+		const lastNote = this.cuerdas.length > 0 ? this.cuerdas[this.cuerdas.length - 1] : "E";
+		this.cuerdas.push(lastNote);
+		this.diapasonConstructor();
 	}
 
 	onClickDeleteString() {
 		this.cuerdas.pop();
+		this.diapasonConstructor();
+	}
+
+	collapseAllPanels() {
+		if (this.panels) {
+			this.panels.forEach((panel) => panel.close());
+		}
 	}
 
 	//#endregion

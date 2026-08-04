@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { UiService } from "./services/ui.service";
 
 @Component({
 	selector: "app-root",
@@ -14,27 +15,13 @@ export class AppComponent {
 			link: ".",
 			icon: "home",
 		},
-		// {
-		// 	title: "Inicio",
-		// 	link: "home",
-		// 	icon: "home"
-		// },
-		// {
-		// 	title: "Tabla",
-		// 	link: "table",
-		// 	icon: "table_chart"
-		// },
-		// {
-		// 	title: "Drag & Drop",
-		// 	link: "drag-and-drop",
-		// 	icon: "table_chart"
-		// },
-		// {
-		// 	title: "Api Rest",
-		// 	link: "rest",
-		// 	icon: "compare_arrows"
-		// }
 	];
 
 	opened: boolean = true;
+
+	constructor(public uiService: UiService) {}
+
+	collapseAllPanels() {
+		this.uiService.triggerCollapseAll();
+	}
 }
