@@ -13,6 +13,9 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatChipsModule } from "@angular/material/chips";
+
 const MATERIAL = [
 	MatCardModule,
 	MatSlideToggleModule,
@@ -27,6 +30,8 @@ const MATERIAL = [
 	MatToolbarModule,
 	MatSidenavModule,
 	MatListModule,
+	MatButtonToggleModule,
+	MatChipsModule,
 ];
 
 @NgModule({

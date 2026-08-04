@@ -110,6 +110,23 @@ export class ScalesComponent implements OnInit {
 	pianoCantidadTeclas: number = 24;
 	pianoTeclas: any = [];
 
+	selectedMode: "scales" | "chords" = "scales";
+
+	chordTypes = [
+		{ name: "Major", shortName: "Maj", intervals: [0, 4, 7], formula: "1 - 3 - 5" },
+		{ name: "Minor", shortName: "m", intervals: [0, 3, 7], formula: "1 - ♭3 - 5" },
+		{ name: "Dominant 7th", shortName: "7", intervals: [0, 4, 7, 10], formula: "1 - 3 - 5 - ♭7" },
+		{ name: "Major 7th", shortName: "Maj7", intervals: [0, 4, 7, 11], formula: "1 - 3 - 5 - 7" },
+		{ name: "Minor 7th", shortName: "m7", intervals: [0, 3, 7, 10], formula: "1 - ♭3 - 5 - ♭7" },
+		{ name: "Diminished", shortName: "dim", intervals: [0, 3, 6], formula: "1 - ♭3 - ♭5" },
+		{ name: "Half-Diminished 7th", shortName: "m7♭5", intervals: [0, 3, 6, 10], formula: "1 - ♭3 - ♭5 - ♭7" },
+		{ name: "Augmented", shortName: "aug", intervals: [0, 4, 8], formula: "1 - 3 - ♯5" },
+		{ name: "Suspended 4th", shortName: "sus4", intervals: [0, 5, 7], formula: "1 - 4 - 5" },
+		{ name: "Suspended 2nd", shortName: "sus2", intervals: [0, 2, 7], formula: "1 - 2 - 5" },
+	];
+
+	selectedChordType: any = null;
+
 	//#endregion vars
 
 	//#region methods
@@ -132,6 +149,49 @@ export class ScalesComponent implements OnInit {
 		return t.puntitos[nroTraste];
 	}
 
+	onModeChange() {
+		if (this.selectedMode === "chords") {
+			if (!this.selectedChordType) {
+				this.selectedChordType = this.chordTypes[0];
+			}
+			this.applyChord();
+		}
+	}
+
+	selectChordType(chord: any) {
+		this.selectedChordType = chord;
+		this.applyChord();
+	}
+
+	applyChord() {
+		if (this.noteRootValue === undefined || this.noteRootValue === null) {
+			this.noteRootValue = 0;
+		}
+		if (!this.selectedChordType) {
+			this.selectedChordType = this.chordTypes[0];
+		}
+
+		const rootIdx = this.noteRootValue;
+		const activeIndices = this.selectedChordType.intervals.map(
+			(semitones: number) => (rootIdx + semitones) % 12
+		);
+
+		this.notes.forEach((n, idx) => {
+			n.root = idx === rootIdx;
+			n.active = activeIndices.includes(idx);
+		});
+
+		this.diapasonConstructor();
+		this.pianoConstructor();
+	}
+
+	getChordNotesString(): string {
+		return this.notes
+			.filter((n) => n.active)
+			.map((n) => n.noteStr)
+			.join(" - ");
+	}
+
 	onClickNoteRoot(noteRootValue: any, index: any) {
 		var t = this;
 
@@ -145,6 +205,10 @@ export class ScalesComponent implements OnInit {
 		});
 
 		t.noteRootValue = index;
+
+		if (t.selectedMode === "chords") {
+			t.applyChord();
+		}
 	}
 
 	diapasonConstructor() {
