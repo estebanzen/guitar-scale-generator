@@ -1,4 +1,3 @@
-// src/app/app.module.ts
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
@@ -9,7 +8,7 @@ import { MaterialModule } from "./material/material.module";
 import { IconsModule } from "./icons/icons.module";
 import { HeaderModule } from "./modules/header/header.module";
 import { AppRoutingModule } from "./app-routing.module";
-// ...otros imports
+import { ScalesModule } from "./components/scales/scales.module";
 
 @NgModule({
 	declarations: [AppComponent, FooterComponent],
@@ -21,6 +20,7 @@ import { AppRoutingModule } from "./app-routing.module";
 		IconsModule,
 		HeaderModule,
 		AppRoutingModule,
+		ScalesModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

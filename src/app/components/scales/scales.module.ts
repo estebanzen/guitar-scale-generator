@@ -1,10 +1,12 @@
 import { NgModule } from "@angular/core";
-// import { CommonModule } from "../common/common.module";
 import { ScalesComponent } from "./scales.component";
+import { GuitarComponent } from "../guitar/guitar.component";
+import { PianoComponent } from "../piano/piano.component";
 import { CommonModule } from "src/app/common/common.module";
 
 @NgModule({
-	declarations: [ScalesComponent],
+	declarations: [ScalesComponent, GuitarComponent, PianoComponent],
 	imports: [CommonModule],
+	exports: [ScalesComponent, GuitarComponent, PianoComponent],
 })
 export class ScalesModule {}

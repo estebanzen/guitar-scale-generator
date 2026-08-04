@@ -103,7 +103,7 @@ export class ScalesComponent implements OnInit {
 
 	diapason: any = [];
 
-	pianoCantidadTeclas: number = 22;
+	pianoCantidadTeclas: number = 24;
 	pianoTeclas: any = [];
 
 	//#endregion vars
