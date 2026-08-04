@@ -12,6 +12,26 @@ Esta herramienta está pensada y diseñada para poder generar escalas en guitarr
 
 This tool is thought and designed to be able to generate scales on guitar and piano.
 
+
+## Desarrollo local
+
+```bash
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
+npm run ng serve
+
+# Build de producción
+npm run ng build
+```
+
+## Publicar en GitHub Pages
+
+```bash
+npm run deploy
+```
+
 ### Powered By :
 
 [E-ZERO](https://e-zero.com.ar/ "https://E-ZERO.com.ar/") Apps.

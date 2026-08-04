@@ -3,7 +3,8 @@
 
     <mat-card class="section-options">
       <mat-card-content>
-        <section style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+        <section
+          style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
           <div>
             <mat-slide-toggle [(ngModel)]="showOptions" class="example-margin">
               SCALE / CHORD
@@ -40,7 +41,8 @@
                 NOTE ROOT
               </mat-panel-title>
               <mat-panel-description>
-                CURRENTLY: <b *ngIf="noteRootValue != undefined" style="margin-left: 4px;"> {{notes[noteRootValue].noteStr}}</b>
+                CURRENTLY: <b *ngIf="noteRootValue != undefined" style="margin-left: 4px;">
+                  {{notes[noteRootValue].noteStr}}</b>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -79,16 +81,16 @@
                 CHORD TYPES
               </mat-panel-title>
               <mat-panel-description>
-                CURRENTLY: <b *ngIf="selectedChordType" style="margin-left: 4px;"> {{notes[noteRootValue]?.noteStr}} {{selectedChordType.name}} ({{getChordNotesString()}})</b>
+                CURRENTLY: <b *ngIf="selectedChordType" style="margin-left: 4px;"> {{notes[noteRootValue].noteStr}}
+                  {{selectedChordType.name}} ({{getChordNotesString()}})</b>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
             <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 0;">
-              <button *ngFor="let chord of chordTypes"
-                      mat-raised-button
-                      [color]="selectedChordType === chord ? 'primary' : ''"
-                      (click)="selectChordType(chord)">
-                <b>{{ chord.name }}</b> <span style="font-size: 0.85em; opacity: 0.8; margin-left: 4px;">({{ chord.formula }})</span>
+              <button *ngFor="let chord of chordTypes" mat-raised-button
+                [color]="selectedChordType === chord ? 'primary' : ''" (click)="selectChordType(chord)">
+                <b>{{ chord.name }}</b> <span style="font-size: 0.85em; opacity: 0.8; margin-left: 4px;">({{
+                  chord.formula }})</span>
               </button>
             </div>
           </mat-expansion-panel>
@@ -138,7 +140,8 @@
             <mat-card>
 
               <mat-slider min="5" max="25" step="1">
-                <input matSliderThumb [(ngModel)]="cantidadTrastes" (input)="diapasonConstructor()" (change)="diapasonConstructor()" />
+                <input matSliderThumb [(ngModel)]="cantidadTrastes" (input)="diapasonConstructor()"
+                  (change)="diapasonConstructor()" />
               </mat-slider>
             </mat-card>
 
