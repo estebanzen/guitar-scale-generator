@@ -192,6 +192,19 @@ export class ScalesComponent implements OnInit {
 			.join(" - ");
 	}
 
+	getChordLabel(): string {
+		if (
+			this.selectedMode !== "chords" ||
+			!this.selectedChordType ||
+			this.noteRootValue === undefined ||
+			this.noteRootValue === null
+		) {
+			return "";
+		}
+
+		return `${this.notes[this.noteRootValue].noteStr} ${this.selectedChordType.shortName}`;
+	}
+
 	isSeventh(note: any): boolean {
 		if (!note.active || this.noteRootValue === undefined || this.noteRootValue === null) {
 			return false;
