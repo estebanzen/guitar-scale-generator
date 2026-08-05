@@ -129,6 +129,11 @@ td.active span {
 td.active.tonic span {
 	color: white;
 	// box-shadow: inset -2px -3px 7px 2px rgba(0, 0, 0, 0.42);
+	background: red;
+}
+
+td.active.seventh span {
+	color: white;
 	background: blue;
 }
 
@@ -171,6 +176,14 @@ td.active.tonic span {
 
 			&.active {
 				background: #c1c504;
+			}
+
+			&.active.tonic {
+				background: red;
+			}
+
+			&.active.seventh {
+				background: blue;
 			}
 
 			span {

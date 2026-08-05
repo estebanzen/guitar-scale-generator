@@ -218,6 +218,7 @@
 
             <td *ngFor="let d of diap" [ngClass]="{
 									'tonic': d.root && d.active,
+									'seventh': isSeventh(d),
 									'active': d.active
 								}" (click)="onClickNote(d)">
               <span>{{d.noteStr}}</span>
@@ -295,6 +296,7 @@
           <tr class="">
             <td *ngFor="let nn of pianoTeclas" class={{nn.classes}} [ngClass]="{
 								'tonic': nn.root && nn.active,
+								'seventh': isSeventh(nn),
 								'active': nn.active
 							}" (click)="onClickNote(nn)">
               <span>{{nn.noteStr}}</span>

@@ -192,6 +192,16 @@ export class ScalesComponent implements OnInit {
 			.join(" - ");
 	}
 
+	isSeventh(note: any): boolean {
+		if (!note.active || this.noteRootValue === undefined || this.noteRootValue === null) {
+			return false;
+		}
+
+		const noteIndex = this.notes.findIndex((n) => n.noteStr === note.noteStr);
+		const interval = (noteIndex - this.noteRootValue + 12) % 12;
+		return interval === 10 || interval === 11;
+	}
+
 	onClickNoteRoot(noteRootValue: any, index: any) {
 		var t = this;
 
