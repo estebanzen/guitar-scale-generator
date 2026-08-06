@@ -9,6 +9,7 @@ import { UiService } from "src/app/services/ui.service";
 })
 export class ScalesComponent implements OnInit {
 	@ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
+	private readonly stateStorageKey = "guitar-tools-state";
 
 	//#region vars
 
@@ -139,8 +140,16 @@ export class ScalesComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.restoreState();
+		this.uiService.setSelectedMode(this.selectedMode);
+
 		this.uiService.collapseAll$.subscribe(() => {
 			this.collapseAllPanels();
+		});
+
+		this.uiService.selectedMode$.subscribe((mode) => {
+			this.selectedMode = mode;
+			this.onModeChange();
 		});
 	}
 
@@ -157,12 +166,14 @@ export class ScalesComponent implements OnInit {
 			this.applyChord();
 		}
 		this.updateGuitarLabel();
+		this.saveState();
 	}
 
 	selectChordType(chord: any) {
 		this.selectedChordType = chord;
 		this.applyChord();
 		this.updateGuitarLabel();
+		this.saveState();
 	}
 
 	applyChord() {
@@ -211,6 +222,59 @@ export class ScalesComponent implements OnInit {
 		this.uiService.setGuitarLabel(this.getChordLabel());
 	}
 
+	private saveState() {
+		const state = {
+			noteRootValue: this.noteRootValue,
+			selectedMode: this.selectedMode,
+			...(this.selectedMode === "chords"
+				? { selectedChordType: this.selectedChordType?.shortName }
+				: {
+						activeNoteIndices: this.notes
+							.map((note, index) => (note.active ? index : -1))
+							.filter((index) => index >= 0),
+					}),
+		};
+
+		localStorage.setItem(this.stateStorageKey, JSON.stringify(state));
+	}
+
+	private restoreState() {
+		const savedState = localStorage.getItem(this.stateStorageKey);
+		if (!savedState) {
+			return;
+		}
+
+		try {
+			const state = JSON.parse(savedState);
+			if (Number.isInteger(state.noteRootValue) && state.noteRootValue >= 0 && state.noteRootValue < this.notes.length) {
+				this.noteRootValue = state.noteRootValue;
+			}
+
+			if (state.selectedMode === "scales" || state.selectedMode === "chords") {
+				this.selectedMode = state.selectedMode;
+			}
+
+			if (this.selectedMode === "chords" && typeof state.selectedChordType === "string") {
+				this.selectedChordType = this.chordTypes.find((chord) => chord.shortName === state.selectedChordType) || null;
+			}
+
+			if (this.selectedMode === "scales" && Array.isArray(state.activeNoteIndices)) {
+				const activeNoteIndices = new Set(state.activeNoteIndices.filter((index: unknown) =>
+					Number.isInteger(index) && (index as number) >= 0 && (index as number) < this.notes.length
+				));
+				this.notes.forEach((note, index) => {
+					note.active = activeNoteIndices.has(index);
+					note.root = index === this.noteRootValue;
+				});
+			}
+		} catch {
+			localStorage.removeItem(this.stateStorageKey);
+		}
+
+		this.diapasonConstructor();
+		this.pianoConstructor();
+	}
+
 	isSeventh(note: any): boolean {
 		if (!note.active || this.noteRootValue === undefined || this.noteRootValue === null) {
 			return false;
@@ -239,6 +303,7 @@ export class ScalesComponent implements OnInit {
 			t.applyChord();
 			t.updateGuitarLabel();
 		}
+		t.saveState();
 	}
 
 	diapasonConstructor() {
@@ -293,6 +358,7 @@ export class ScalesComponent implements OnInit {
 		}
 		t.diapasonConstructor();
 		t.pianoConstructor();
+		t.saveState();
 	}
 
 	pianoConstructor() {

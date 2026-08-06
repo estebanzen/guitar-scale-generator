@@ -9,6 +9,8 @@ export class UiService {
 	collapseAll$ = this.collapseAllSubject.asObservable();
 	private guitarLabelSubject = new BehaviorSubject<string>("");
 	guitarLabel$ = this.guitarLabelSubject.asObservable();
+	private selectedModeSubject = new BehaviorSubject<"scales" | "chords">("scales");
+	selectedMode$ = this.selectedModeSubject.asObservable();
 
 	triggerCollapseAll() {
 		this.collapseAllSubject.next();
@@ -16,5 +18,9 @@ export class UiService {
 
 	setGuitarLabel(label: string) {
 		this.guitarLabelSubject.next(label);
+	}
+
+	setSelectedMode(mode: "scales" | "chords") {
+		this.selectedModeSubject.next(mode);
 	}
 }

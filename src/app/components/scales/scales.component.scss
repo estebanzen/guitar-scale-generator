@@ -1,8 +1,8 @@
 .wrapper-container {
-	padding: 16px;
-	// display: flex;
-	// align-items: center;
-	// justify-content: center;
+  padding: 16px;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 }
 
 // body {
@@ -10,87 +10,87 @@
 // }
 
 .mat-form-field + .mat-form-field {
-	margin-left: 8px;
+  margin-left: 8px;
 }
 
 .logo {
-	text-align: center;
-	display: block;
-	margin: 27px;
+  text-align: center;
+  display: block;
+  margin: 27px;
 }
 .guitar-container {
-	position: relative;
-	width: 100%;
-	overflow: auto;
+  position: relative;
+  width: 100%;
+  overflow: auto;
 }
 table {
-	// border-spacing: 10px;
-	border-collapse: collapse;
+  // border-spacing: 10px;
+  border-collapse: collapse;
 }
 
 table.guitar {
-	background: url(https://thumbs.dreamstime.com/t/wood-texture-maple-background-design-49324284.jpg);
-	.trastes-numeros {
-		td {
-			background-color: white;
-		}
-	}
-	.trastes-puntitos {
-		td {
-			background-color: white;
-			span {
-				min-width: 0px;
-				width: 15px;
-				height: 15px;
-			}
-			&.one {
-				span {
-					background-color: black;
-				}
-			}
-			&.two {
-				span {
-					background-color: green;
-				}
-			}
-		}
-	}
-	// background: url("./assets/img/rosewood.jpg");
+  background-color: #d3ba99;
+  .trastes-numeros {
+    td {
+      background-color: white;
+    }
+  }
+  .trastes-puntitos {
+    td {
+      background-color: white;
+      span {
+        min-width: 0px;
+        width: 15px;
+        height: 15px;
+      }
+      &.one {
+        span {
+          background-color: black;
+        }
+      }
+      &.two {
+        span {
+          background-color: green;
+        }
+      }
+    }
+  }
+  // background: url("./assets/img/rosewood.jpg");
 
-	tr.string {
-		td {
-			// background: rgb(222, 189, 160);
-			border-right: solid;
-			height: 40px;
-			width: 40px;
-			cursor: pointer;
-			position: relative;
-		}
+  tr.string {
+    td {
+      // background: rgb(222, 189, 160);
+      border-right: solid;
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+      position: relative;
+    }
 
-		// cuerda alfa
-		td:before {
-			content: " ";
-			display: block;
-			background: rgba(95, 84, 84, 0.27);
-			height: 5px;
-			width: 98%;
-			position: absolute;
-			top: 17px;
-			opacity: 0.5;
-			background: rgb(114, 114, 104);
-			background: linear-gradient(
-				0deg,
-				rgba(114, 114, 104, 1) 0%,
-				rgba(250, 248, 249, 1) 50%,
-				rgba(217, 214, 207, 1) 100%
-			);
-		}
+    // cuerda alfa
+    td:before {
+      content: " ";
+      display: block;
+      background: rgba(95, 84, 84, 0.27);
+      height: 5px;
+      width: 98%;
+      position: absolute;
+      top: 17px;
+      opacity: 0.5;
+      background: rgb(114, 114, 104);
+      background: linear-gradient(
+        0deg,
+        rgba(114, 114, 104, 1) 0%,
+        rgba(250, 248, 249, 1) 50%,
+        rgba(217, 214, 207, 1) 100%
+      );
+    }
 
-		td:first-child {
-			background-color: gainsboro;
-			border-right: solid 10px gray;
-		}
-	}
+    td:first-child {
+      background-color: gainsboro;
+      border-right: solid 10px gray;
+    }
+  }
 }
 
 // table.guitar tr.string td:after {
@@ -109,183 +109,243 @@ table.guitar {
 // }
 
 td span {
-	text-align: center;
-	min-width: 30px;
-	width: 30px;
-	height: 30px;
-	margin: auto;
-	display: block;
-	line-height: 30px;
-	border-radius: 50%;
-	position: relative;
+  text-align: center;
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  display: block;
+  line-height: 30px;
+  border-radius: 50%;
+  position: relative;
 }
 
 td.active span {
-	color: white;
-	// box-shadow: inset -2px -3px 7px 2px rgba(0, 0, 0, 0.42);
-	background: black;
+  color: white;
+  background: black;
 }
 
 td.active.tonic span {
-	color: white;
-	// box-shadow: inset -2px -3px 7px 2px rgba(0, 0, 0, 0.42);
-	background: red;
+  color: white;
+  // box-shadow: inset -2px -3px 7px 2px rgba(0, 0, 0, 0.42);
+  background: red;
 }
 
 td.active.seventh span {
-	color: white;
-	background: blue;
+  color: white;
+  background: blue;
 }
 
 .piano-container {
-	position: relative;
-	width: 100%;
-	overflow-x: auto;
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
 
-	table.piano {
-		border: solid 1px;
-		td {
-			background: white;
-			border: solid;
+  table.piano {
+    border: solid 1px;
+    td {
+      background: white;
+      border: solid;
 
-			border-right: solid 1px;
-			height: 110px;
-			width: 45px;
-			min-width: 40px;
-			max-width: 340px;
-			cursor: pointer;
-			position: relative;
-			// box-shadow: inset 0px 0px 4px 0px black;
-			&.c-s,
-			&.d-s,
-			&.f-s,
-			&.g-s,
-			&.a-s {
-				background: black;
-				color: white;
-				border: solid black;
-				border-top: 0;
-				position: absolute;
-				margin-left: -18px;
-				height: 70px;
-				width: 28px;
-				min-width: 0;
-				z-index: 9;
-				// box-shadow: inset 0px 0px 4px 0px black;
-			}
+      border-right: solid 1px;
+      height: 110px;
+      width: 45px;
+      min-width: 40px;
+      max-width: 340px;
+      cursor: pointer;
+      position: relative;
+      // box-shadow: inset 0px 0px 4px 0px black;
+      &.c-s,
+      &.d-s,
+      &.f-s,
+      &.g-s,
+      &.a-s {
+        background: black;
+        color: white;
+        border: solid black;
+        border-top: 0;
+        position: absolute;
+        margin-left: -18px;
+        height: 70px;
+        width: 28px;
+        min-width: 0;
+        z-index: 9;
+        // box-shadow: inset 0px 0px 4px 0px black;
+      }
 
-			&.active {
-				background: #c1c504;
-			}
+      &.active {
+        background: #c1c504;
+      }
 
-			&.active.tonic {
-				background: red;
-			}
+      &.active.tonic {
+        background: red;
+      }
 
-			&.active.seventh {
-				background: blue;
-			}
+      &.active.seventh {
+        background: blue;
+      }
 
-			span {
-				position: absolute;
-				left: 9px;
-				bottom: 7px;
-			}
+      span {
+        position: absolute;
+        left: 9px;
+        bottom: 7px;
+      }
 
-			&.c-s span,
-			&.d-s span,
-			&.f-s span,
-			&.g-s span,
-			&.a-s span {
-				left: 0px;
-				bottom: 17px;
-			}
-		}
-	}
+      &.c-s span,
+      &.d-s span,
+      &.f-s span,
+      &.g-s span,
+      &.a-s span {
+        left: 0px;
+        bottom: 17px;
+      }
+    }
+  }
+}
+
+:host-context(.dark-theme) {
+  .guitar-container {
+    table.guitar {
+      background-color: #3b1f1b;
+
+      .trastes-numeros td,
+      .trastes-puntitos td {
+        background-color: #424242;
+        color: #f2e8dc;
+      }
+
+      .trastes-puntitos td.one span {
+        background-color: #d2b48c;
+      }
+
+      .trastes-puntitos td.two span {
+        background-color: #75a85b;
+      }
+
+      tr.string td:first-child {
+        background-color: #4a4038;
+        border-right-color: #85766c;
+      }
+    }
+  }
+
+  .piano-container table.piano {
+    border-color: #e8e8e8;
+
+    td {
+      background: #111;
+      color: #f5f5f5;
+      border-color: #dedede;
+
+      &.c-s,
+      &.d-s,
+      &.f-s,
+      &.g-s,
+      &.a-s {
+        background: #f5f5f5;
+        color: #111;
+        border-color: #f5f5f5;
+      }
+
+      &.active {
+        background: #c1c504;
+        color: #111;
+      }
+
+      &.active.tonic {
+        background: #e53935;
+        color: white;
+      }
+
+      &.active.seventh {
+        background: #3f51b5;
+        color: white;
+      }
+    }
+  }
 }
 
 ///
 .example-ripple-container {
-	display: flex;
-	margin-bottom: 25px;
+  display: flex;
+  margin-bottom: 25px;
 }
 
 .example-ripple {
-	cursor: pointer;
-	text-align: center;
-	margin-right: 15px;
+  cursor: pointer;
+  text-align: center;
+  margin-right: 15px;
 
-	margin-bottom: 15px;
+  margin-bottom: 15px;
 
-	width: 80px;
-	height: 80px;
-	line-height: 80px;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
 
-	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
-	-webkit-user-drag: none;
-	-webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
 
-	transition: all 0.5s;
+  transition: all 0.5s;
 }
 .example-ripple.active {
-	background-color: rgba(0, 0, 255, 0.5);
+  background-color: rgba(0, 0, 255, 0.5);
 }
 /** Styles to make the demo look better. */
 .example-ripple-checkbox {
-	margin: 6px 12px 6px 0;
+  margin: 6px 12px 6px 0;
 }
 
 .example-ripple-form-field {
-	margin: 0 12px 0 0;
+  margin: 0 12px 0 0;
 }
 
 .wrapper-container {
-	padding: 16px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .the-card {
-	width: 100%;
+  width: 100%;
 }
 
 .cards-result {
-	max-width: 100%;
-	overflow: hidden;
-	margin-bottom: 16px;
+  max-width: 100%;
+  overflow: hidden;
+  margin-bottom: 16px;
 }
 
 .form-elements {
-	width: 100%;
+  width: 100%;
 }
 
 .section-options {
-	mat-slide-toggle {
-		margin-right: 15px;
-	}
+  mat-slide-toggle {
+    margin-right: 15px;
+  }
 }
 
 .strings-container {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 14px;
-	margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
 
-	.string-field {
-		width: 95px;
-	}
+  .string-field {
+    width: 95px;
+  }
 }
 
 .strings-actions {
-	display: flex;
-	gap: 12px;
-	align-items: center;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
-

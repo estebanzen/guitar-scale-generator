@@ -1,10 +1,4 @@
 <mat-sidenav-container class="container">
-  <!-- [(opened)]="opened" -->
-  <mat-sidenav #sidenav
-               [mode]="'over'">
-    <app-header [textToShow]="menus"></app-header>
-  </mat-sidenav>
-
   <mat-sidenav-content>
     <mat-toolbar color="primary"
                  class="header-box-shadow">
@@ -18,17 +12,21 @@
         COLLAPSE ALL PANELS
       </button>
 
-      <button class="navigation-items"
-              *ngFor="let item of menus"
-              mat-button
-              [routerLink]="item.link">
-        <mat-icon class="mr-1"> {{ item.icon }}</mat-icon>
-        {{ item.title }}
-      </button>
-      <button class="navigation-icon"
-              mat-icon-button
-              (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
+      <mat-button-toggle-group class="mode-selector"
+                               [value]="uiService.selectedMode$ | async"
+                               (change)="uiService.setSelectedMode($event.value)">
+        <mat-button-toggle value="scales">
+          <mat-icon style="margin-right: 4px;">queue_music</mat-icon> SCALES
+        </mat-button-toggle>
+        <mat-button-toggle value="chords">
+          <mat-icon style="margin-right: 4px;">music_note</mat-icon> CHORDS
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <button mat-icon-button
+              (click)="toggleDarkTheme()"
+              [attr.aria-label]="isDarkTheme ? 'Activar tema claro' : 'Activar tema oscuro'">
+        <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
       </button>
     </mat-toolbar>
 
