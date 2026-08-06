@@ -92,6 +92,14 @@ export class ScalesComponent implements OnInit {
 	showPianoOptions: any;
 	showOptions = true;
 	sliderColor = "primary";
+	panelState: Record<string, boolean> = {
+		rootNote: true,
+		scaleNotes: false,
+		chordTypes: true,
+		fretsAmount: false,
+		strings: false,
+		pianoOctaves: false,
+	};
 	// cantidadCuerdas: number = 6;
 	puntitos: any = {
 		3: 1,
@@ -226,6 +234,7 @@ export class ScalesComponent implements OnInit {
 		const state = {
 			noteRootValue: this.noteRootValue,
 			selectedMode: this.selectedMode,
+			panelState: this.panelState,
 			...(this.selectedMode === "chords"
 				? { selectedChordType: this.selectedChordType?.shortName }
 				: {
@@ -267,12 +276,25 @@ export class ScalesComponent implements OnInit {
 					note.root = index === this.noteRootValue;
 				});
 			}
+
+			if (state.panelState && typeof state.panelState === "object") {
+				Object.keys(this.panelState).forEach((panel) => {
+					if (typeof state.panelState[panel] === "boolean") {
+						this.panelState[panel] = state.panelState[panel];
+					}
+				});
+			}
 		} catch {
 			localStorage.removeItem(this.stateStorageKey);
 		}
 
 		this.diapasonConstructor();
 		this.pianoConstructor();
+	}
+
+	setPanelState(panel: string, isOpen: boolean) {
+		this.panelState[panel] = isOpen;
+		this.saveState();
 	}
 
 	isSeventh(note: any): boolean {
