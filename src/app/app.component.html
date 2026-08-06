@@ -9,6 +9,7 @@
     <mat-toolbar color="primary"
                  class="header-box-shadow">
       <span>GUITAR TOOLS</span>
+      <span *ngIf="uiService.guitarLabel$ | async as guitarLabel" style="margin-left: 16px;"> {{ guitarLabel }}</span>
 
       <span class="navigation-spacer"></span>
 

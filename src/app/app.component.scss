@@ -10,6 +10,12 @@
     min-height: 500px;
 }
 
+.header-box-shadow {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
 .navigation-spacer {
     flex: 1 1 auto;
 }

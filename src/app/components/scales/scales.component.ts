@@ -113,13 +113,13 @@ export class ScalesComponent implements OnInit {
 	selectedMode: "scales" | "chords" = "scales";
 
 	chordTypes = [
-		{ name: "Major", shortName: "Maj", intervals: [0, 4, 7], formula: "1 - 3 - 5" },
-		{ name: "Minor", shortName: "m", intervals: [0, 3, 7], formula: "1 - ♭3 - 5" },
+		{ name: "Major", shortName: "maj", intervals: [0, 4, 7], formula: "1 - 3 - 5" },
+		{ name: "Minor", shortName: "min", intervals: [0, 3, 7], formula: "1 - ♭3 - 5" },
 		{ name: "Dominant 7th", shortName: "7", intervals: [0, 4, 7, 10], formula: "1 - 3 - 5 - ♭7" },
-		{ name: "Major 7th", shortName: "Maj7", intervals: [0, 4, 7, 11], formula: "1 - 3 - 5 - 7" },
-		{ name: "Minor 7th", shortName: "m7", intervals: [0, 3, 7, 10], formula: "1 - ♭3 - 5 - ♭7" },
+		{ name: "Major 7th", shortName: "maj7", intervals: [0, 4, 7, 11], formula: "1 - 3 - 5 - 7" },
+		{ name: "Minor 7th", shortName: "min7", intervals: [0, 3, 7, 10], formula: "1 - ♭3 - 5 - ♭7" },
 		{ name: "Diminished", shortName: "dim", intervals: [0, 3, 6], formula: "1 - ♭3 - ♭5" },
-		{ name: "Half-Diminished 7th", shortName: "m7♭5", intervals: [0, 3, 6, 10], formula: "1 - ♭3 - ♭5 - ♭7" },
+		{ name: "Half-Diminished 7th", shortName: "min7♭5", intervals: [0, 3, 6, 10], formula: "1 - ♭3 - ♭5 - ♭7" },
 		{ name: "Augmented", shortName: "aug", intervals: [0, 4, 8], formula: "1 - 3 - ♯5" },
 		{ name: "Suspended 4th", shortName: "sus4", intervals: [0, 5, 7], formula: "1 - 4 - 5" },
 		{ name: "Suspended 2nd", shortName: "sus2", intervals: [0, 2, 7], formula: "1 - 2 - 5" },
@@ -156,11 +156,13 @@ export class ScalesComponent implements OnInit {
 			}
 			this.applyChord();
 		}
+		this.updateGuitarLabel();
 	}
 
 	selectChordType(chord: any) {
 		this.selectedChordType = chord;
 		this.applyChord();
+		this.updateGuitarLabel();
 	}
 
 	applyChord() {
@@ -202,7 +204,11 @@ export class ScalesComponent implements OnInit {
 			return "";
 		}
 
-		return `${this.notes[this.noteRootValue].noteStr} ${this.selectedChordType.shortName}`;
+		return `${this.notes[this.noteRootValue].noteStr}${this.selectedChordType.shortName}`;
+	}
+
+	updateGuitarLabel() {
+		this.uiService.setGuitarLabel(this.getChordLabel());
 	}
 
 	isSeventh(note: any): boolean {
@@ -231,6 +237,7 @@ export class ScalesComponent implements OnInit {
 
 		if (t.selectedMode === "chords") {
 			t.applyChord();
+			t.updateGuitarLabel();
 		}
 	}
 
