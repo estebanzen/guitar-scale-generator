@@ -80,6 +80,7 @@ export class UiService {
     this.showPiano$ = this.showPianoSubject.asObservable();
   }
 
+  /** Devuelve una copia segura del estado musical guardado. */
   getState(): MusicState {
     const state = this.stateSubject.value;
     return {
@@ -89,6 +90,7 @@ export class UiService {
     };
   }
 
+  /** Mezcla una actualización parcial, la publica y la guarda en localStorage. */
   updateState(update: Partial<MusicState>) {
     const current = this.stateSubject.value;
     const next: MusicState = {
@@ -105,45 +107,54 @@ export class UiService {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   }
 
+  /** Define y guarda el tema de colores activo. */
   setTheme(theme: Theme) {
     this.updateState({ theme });
     localStorage.removeItem('theme');
   }
 
+  /** Publica la etiqueta corta de acorde o escala que se ve en la barra. */
   setGuitarLabel(label: string) {
     this.guitarLabelSubject.next(label);
   }
 
+  /** Actualiza el modo de trabajo activo. */
   setSelectedMode(mode: MusicMode) {
     this.selectedModeSubject.next(mode);
     this.updateState({ selectedMode: mode });
   }
 
+  /** Actualiza la raíz cromática elegida; con null la deja sin selección. */
   setRootNote(noteIndex: number | null) {
     this.rootNoteSubject.next(noteIndex);
     this.updateState({ noteRootValue: noteIndex });
   }
 
+  /** Actualiza el identificador del patrón de acorde elegido. */
   setSelectedChordType(shortName: string | null) {
     this.selectedChordTypeSubject.next(shortName);
     this.updateState({ selectedChordType: shortName });
   }
 
+  /** Actualiza el identificador del patrón de escala elegido. */
   setSelectedScaleType(id: string | null) {
     this.selectedScaleTypeSubject.next(id);
     this.updateState({ selectedScaleType: id });
   }
 
+  /** Define si se muestra o no el diapasón de la guitarra. */
   setShowGuitar(isVisible: boolean) {
     this.showGuitarSubject.next(isVisible);
     this.updateState({ showGuitar: isVisible });
   }
 
+  /** Define si se muestra o no el teclado del piano. */
   setShowPiano(isVisible: boolean) {
     this.showPianoSubject.next(isVisible);
     this.updateState({ showPiano: isVisible });
   }
 
+  /** Carga el estado una vez y migra la clave vieja del tema si todavía existe. */
   private readState(): MusicState {
     try {
       const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');

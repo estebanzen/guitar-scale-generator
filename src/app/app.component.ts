@@ -44,21 +44,25 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /** Sincroniza los botones de instrumentos con selección múltiple y el estado de la UI. */
   onInstrumentsChange(instruments: string[]) {
     this.uiService.setShowGuitar(instruments.includes('guitar'));
     this.uiService.setShowPiano(instruments.includes('piano'));
   }
 
+  /** Alterna entre los temas claro y oscuro guardados. */
   toggleDarkTheme() {
     this.isDarkTheme = !this.isDarkTheme;
     this.applyTheme();
     this.uiService.setTheme(this.isDarkTheme ? 'dark' : 'light');
   }
 
+  /** Aplica la clase del tema actual al body del documento. */
   private applyTheme() {
     document.body.classList.toggle('dark-theme', this.isDarkTheme);
   }
 
+  /** Mantiene la lista de instrumentos elegidos en la barra sincronizada con el estado. */
   private setInstrumentVisibility(instrument: string, isVisible: boolean) {
     this.visibleInstruments = isVisible
       ? [...new Set([...this.visibleInstruments, instrument])]
