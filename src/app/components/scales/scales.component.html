@@ -1,100 +1,6 @@
 <div class="wrapper-container">
   <mat-card class="the-card">
 
-    <mat-card class="section-options">
-      <mat-card-content>
-        <section
-          style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
-          <div>
-            <mat-slide-toggle [(ngModel)]="showOptions" class="example-margin">
-              SCALE / CHORD
-            </mat-slide-toggle>
-
-            <mat-slide-toggle [(ngModel)]="showGuitar" class="example-margin" [color]="sliderColor">
-              GUITAR
-            </mat-slide-toggle>
-
-            <mat-slide-toggle [(ngModel)]="showPiano" class="example-margin" [color]="sliderColor">
-              PIANO
-            </mat-slide-toggle>
-          </div>
-        </section>
-      </mat-card-content>
-
-      <section *ngIf="showOptions">
-
-        <mat-accordion>
-
-          <mat-expansion-panel [expanded]="panelState['rootNote']" (opened)="setPanelState('rootNote', true)" (closed)="setPanelState('rootNote', false)">
-            <!-- ROOT NOTE -->
-            <mat-expansion-panel-header>
-              <mat-panel-title style="width: 20%;">
-                NOTE ROOT
-              </mat-panel-title>
-              <mat-panel-description>
-                CURRENTLY: <b *ngIf="noteRootValue != undefined" style="margin-left: 4px;">
-                  {{notes[noteRootValue].noteStr}}</b>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <div class="example-ripple-container">
-              <div *ngFor="let note of notes;let i=index;" class="example-ripple mat-elevation-z1" matRipple
-                (click)="onClickNoteRoot(note,i)" [ngClass]="{'active mat-elevation-z7' : note.root}">
-                {{note.noteStr}}
-              </div>
-            </div>
-            <!-- ROOT NOTE -->
-          </mat-expansion-panel>
-
-          <!-- SCALES PANEL -->
-          <mat-expansion-panel *ngIf="selectedMode === 'scales'" [expanded]="panelState['scaleNotes']" (opened)="setPanelState('scaleNotes', true)" (closed)="setPanelState('scaleNotes', false)">
-            <mat-expansion-panel-header>
-              <mat-panel-title style="width: 20%;">
-                SCALE NOTES
-              </mat-panel-title>
-              <mat-panel-description>
-                SELECT NOTES FOR CUSTOM SCALE
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <div class="example-ripple-container">
-              <div *ngFor="let note of notes" class="example-ripple mat-elevation-z1" matRipple
-                (click)="onClickNote(note)" [ngClass]="{'active mat-elevation-z7' : note.active}">
-                {{note.noteStr}}
-              </div>
-            </div>
-          </mat-expansion-panel>
-
-          <!-- CHORDS PANEL -->
-          <mat-expansion-panel *ngIf="selectedMode === 'chords'" [expanded]="panelState['chordTypes']" (opened)="setPanelState('chordTypes', true)" (closed)="setPanelState('chordTypes', false)">
-            <mat-expansion-panel-header>
-              <mat-panel-title style="width: 20%;">
-                CHORD TYPES
-              </mat-panel-title>
-              <mat-panel-description>
-                CURRENTLY: <b *ngIf="selectedChordType" style="margin-left: 4px;"> {{notes[noteRootValue].noteStr}}
-                  {{selectedChordType.name}} ({{getChordNotesString()}})</b>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 0;">
-              <button *ngFor="let chord of chordTypes" mat-raised-button
-                [color]="selectedChordType === chord ? 'primary' : ''" (click)="selectChordType(chord)">
-                <b>{{ chord.name }}</b> <span style="font-size: 0.85em; opacity: 0.8; margin-left: 4px;">({{
-                  chord.formula }})</span>
-              </button>
-            </div>
-          </mat-expansion-panel>
-
-        </mat-accordion>
-        <!-- /GUITAR OPTIONS -->
-
-      </section>
-    </mat-card>
-
-    <br>
-
-
     <mat-card *ngIf="showGuitar">
 
       <div style="height: 40px;">
@@ -130,8 +36,8 @@
             <mat-card>
 
               <mat-slider min="5" max="25" step="1">
-                <input matSliderThumb [(ngModel)]="cantidadTrastes" (input)="diapasonConstructor()"
-                  (change)="diapasonConstructor()" />
+                <input matSliderThumb [(ngModel)]="cantidadTrastes" (input)="onFretsAmountChange()"
+                  (change)="onFretsAmountChange()" />
               </mat-slider>
             </mat-card>
 
@@ -208,6 +114,7 @@
 
             <td *ngFor="let d of diap" [ngClass]="{
 									'tonic': d.root && d.active,
+									'third': isThird(d),
 									'seventh': isSeventh(d),
 									'active': d.active
 								}" (click)="onClickNote(d)">
@@ -267,8 +174,8 @@
             <mat-card>
 
               <mat-slider min="12" max="60" step="12">
-                <input matSliderThumb [(ngModel)]="pianoCantidadTeclas" (input)="pianoConstructor()"
-                  (change)="pianoConstructor()" />
+                <input matSliderThumb [(ngModel)]="pianoCantidadTeclas" (input)="onPianoOctavesChange()"
+                  (change)="onPianoOctavesChange()" />
               </mat-slider>
 
             </mat-card>
@@ -286,6 +193,7 @@
           <tr class="">
             <td *ngFor="let nn of pianoTeclas" class={{nn.classes}} [ngClass]="{
 								'tonic': nn.root && nn.active,
+								'third': isThird(nn),
 								'seventh': isSeventh(nn),
 								'active': nn.active
 							}" (click)="onClickNote(nn)">

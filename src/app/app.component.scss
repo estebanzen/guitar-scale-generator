@@ -20,8 +20,52 @@
   flex: 1 1 auto;
 }
 
+.root-note-select {
+  width: 122px;
+  margin-right: 8px;
+}
+
+.chord-type-select {
+  width: 164px;
+  margin-right: 8px;
+}
+
+.scale-type-select {
+  width: 180px;
+  margin-right: 8px;
+}
+
+.mode-selector,
+.instrument-selector {
+  margin-right: 8px;
+}
+
+:host ::ng-deep .root-note-select .mat-mdc-form-field-subscript-wrapper,
+:host ::ng-deep .chord-type-select .mat-mdc-form-field-subscript-wrapper,
+:host ::ng-deep .scale-type-select .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
 :host ::ng-deep .mode-selector .mat-button-toggle {
   height: 36px;
+}
+
+:host ::ng-deep .instrument-selector .mat-button-toggle {
+  height: 36px;
+}
+
+:host ::ng-deep .instrument-selector .mat-button-toggle-label-content {
+  line-height: 36px;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+:host ::ng-deep .instrument-selector .mat-pseudo-checkbox {
+  margin-right: 6px;
+}
+
+:host ::ng-deep .mode-selector .mat-pseudo-checkbox {
+  margin-right: 6px;
 }
 
 :host ::ng-deep .mode-selector .mat-button-toggle-label-content {

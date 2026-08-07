@@ -7,19 +7,52 @@
 
       <span class="navigation-spacer"></span>
 
-      <button mat-button (click)="collapseAllPanels()" style="margin-right: 8px;">
-        <mat-icon class="mr-1">unfold_less</mat-icon>
-        COLLAPSE ALL PANELS
-      </button>
+      <mat-form-field class="root-note-select" appearance="fill">
+        <mat-label>NOTE ROOT</mat-label>
+        <mat-select [value]="uiService.rootNote$ | async"
+                    (selectionChange)="uiService.setRootNote($event.value)">
+          <mat-option *ngFor="let note of notes; let index = index" [value]="index">{{ note }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="(uiService.selectedMode$ | async) === 'scales'" class="scale-type-select" appearance="fill">
+        <mat-label>SCALE TYPE</mat-label>
+        <mat-select [value]="uiService.selectedScaleType$ | async" (selectionChange)="uiService.setSelectedScaleType($event.value)">
+          <mat-option *ngFor="let scale of scaleTypes" [value]="scale.id">{{ scale.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="(uiService.selectedMode$ | async) === 'chords'" class="chord-type-select" appearance="fill">
+        <mat-label>CHORD TYPE</mat-label>
+        <mat-select [value]="uiService.selectedChordType$ | async" (selectionChange)="uiService.setSelectedChordType($event.value)">
+          <mat-option *ngFor="let chord of chordTypes" [value]="chord.shortName">{{ chord.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <mat-button-toggle-group class="mode-selector"
                                [value]="uiService.selectedMode$ | async"
                                (change)="uiService.setSelectedMode($event.value)">
         <mat-button-toggle value="scales">
+          <mat-pseudo-checkbox *ngIf="(uiService.selectedMode$ | async) === 'scales'" state="checked" aria-hidden="true" class="mat-pseudo-checkbox-minimal"></mat-pseudo-checkbox>
           <mat-icon style="margin-right: 4px;">queue_music</mat-icon> SCALES
         </mat-button-toggle>
         <mat-button-toggle value="chords">
+          <mat-pseudo-checkbox *ngIf="(uiService.selectedMode$ | async) === 'chords'" state="checked" aria-hidden="true" class="mat-pseudo-checkbox-minimal"></mat-pseudo-checkbox>
           <mat-icon style="margin-right: 4px;">music_note</mat-icon> CHORDS
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-button-toggle-group class="instrument-selector"
+                               multiple
+                               [value]="visibleInstruments"
+                               (change)="onInstrumentsChange($event.value)">
+        <mat-button-toggle value="guitar">
+          <mat-pseudo-checkbox *ngIf="visibleInstruments.includes('guitar')" state="checked" aria-hidden="true" class="mat-pseudo-checkbox-minimal"></mat-pseudo-checkbox>
+          GUITAR
+        </mat-button-toggle>
+        <mat-button-toggle value="piano">
+          <mat-pseudo-checkbox *ngIf="visibleInstruments.includes('piano')" state="checked" aria-hidden="true" class="mat-pseudo-checkbox-minimal"></mat-pseudo-checkbox>
+          PIANO
         </mat-button-toggle>
       </mat-button-toggle-group>
 

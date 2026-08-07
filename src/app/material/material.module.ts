@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { MatRippleModule } from "@angular/material/core";
+import { MatPseudoCheckboxModule, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -21,6 +21,7 @@ const MATERIAL = [
 	MatSlideToggleModule,
 	MatExpansionModule,
 	MatRippleModule,
+	MatPseudoCheckboxModule,
 	MatIconModule,
 	MatButtonModule,
 	MatFormFieldModule,

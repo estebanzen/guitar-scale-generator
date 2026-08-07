@@ -63,6 +63,7 @@ table.guitar {
       border-right: solid;
       height: 40px;
       width: 40px;
+      min-width: 40px;
       cursor: pointer;
       position: relative;
     }
@@ -131,9 +132,23 @@ td.active.tonic span {
   background: red;
 }
 
+td.active.third span {
+  color: black;
+  background: #a8b83f;
+}
+
 td.active.seventh span {
   color: white;
-  background: blue;
+  background: #515b13;
+}
+
+table.piano td.c-s.active:not(.tonic):not(.third):not(.seventh) span,
+table.piano td.d-s.active:not(.tonic):not(.third):not(.seventh) span,
+table.piano td.f-s.active:not(.tonic):not(.third):not(.seventh) span,
+table.piano td.g-s.active:not(.tonic):not(.third):not(.seventh) span,
+table.piano td.a-s.active:not(.tonic):not(.third):not(.seventh) span {
+  color: black;
+  background: white;
 }
 
 .piano-container {
@@ -145,12 +160,12 @@ td.active.seventh span {
     border: solid 1px;
     td {
       background: white;
-      border: solid;
+      /*       border: solid 1px; */
 
       border-right: solid 1px;
       height: 110px;
       width: 45px;
-      min-width: 40px;
+      min-width: 45px;
       max-width: 340px;
       cursor: pointer;
       position: relative;
@@ -173,18 +188,6 @@ td.active.seventh span {
         // box-shadow: inset 0px 0px 4px 0px black;
       }
 
-      &.active {
-        background: #c1c504;
-      }
-
-      &.active.tonic {
-        background: red;
-      }
-
-      &.active.seventh {
-        background: blue;
-      }
-
       span {
         position: absolute;
         left: 9px;
@@ -204,6 +207,35 @@ td.active.seventh span {
 }
 
 :host-context(.dark-theme) {
+  td.active:not(.tonic):not(.third):not(.seventh) span {
+    color: black;
+    background: white;
+  }
+
+  .piano-container
+    table.piano
+    td.c-s.active:not(.tonic):not(.third):not(.seventh)
+    span,
+  .piano-container
+    table.piano
+    td.d-s.active:not(.tonic):not(.third):not(.seventh)
+    span,
+  .piano-container
+    table.piano
+    td.f-s.active:not(.tonic):not(.third):not(.seventh)
+    span,
+  .piano-container
+    table.piano
+    td.g-s.active:not(.tonic):not(.third):not(.seventh)
+    span,
+  .piano-container
+    table.piano
+    td.a-s.active:not(.tonic):not(.third):not(.seventh)
+    span {
+    color: white;
+    background: black;
+  }
+
   .guitar-container {
     table.guitar {
       background-color: #3b1f1b;
@@ -245,21 +277,6 @@ td.active.seventh span {
         background: #f5f5f5;
         color: #111;
         border-color: #f5f5f5;
-      }
-
-      &.active {
-        background: #c1c504;
-        color: #111;
-      }
-
-      &.active.tonic {
-        background: #e53935;
-        color: white;
-      }
-
-      &.active.seventh {
-        background: #3f51b5;
-        color: white;
       }
     }
   }
