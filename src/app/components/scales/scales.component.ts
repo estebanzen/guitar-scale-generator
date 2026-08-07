@@ -376,13 +376,13 @@ export class ScalesComponent implements OnInit {
       showGuitar: this.showGuitar,
       showPiano: this.showPiano,
       panelState: this.panelState,
+      activeNoteIndices: this.notes
+        .map((note, index) => (note.active ? index : -1))
+        .filter((index) => index >= 0),
       ...(this.selectedMode === 'chords'
         ? { selectedChordType: this.selectedChordType?.shortName }
         : {
             selectedScaleType: this.selectedScaleType,
-            activeNoteIndices: this.notes
-              .map((note, index) => (note.active ? index : -1))
-              .filter((index) => index >= 0),
           }),
     };
 

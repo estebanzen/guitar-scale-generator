@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export type MusicMode = 'scales' | 'chords';
 export type Theme = 'light' | 'dark';
+export type PlaybackInstrument = 'guitar' | 'piano';
 
 export interface MusicState {
   theme: Theme;
@@ -15,6 +16,9 @@ export interface MusicState {
   pianoCantidadTeclas: number;
   showGuitar: boolean;
   showPiano: boolean;
+  playbackBpm: number;
+  playbackLoop: boolean;
+  playbackInstrument: PlaybackInstrument;
   panelState: Record<string, boolean>;
 }
 
@@ -31,6 +35,9 @@ const DEFAULT_STATE: MusicState = {
   pianoCantidadTeclas: 24,
   showGuitar: true,
   showPiano: true,
+  playbackBpm: 100,
+  playbackLoop: false,
+  playbackInstrument: 'guitar',
   panelState: {},
 };
 

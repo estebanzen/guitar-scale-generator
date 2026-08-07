@@ -29,6 +29,11 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field class="selected-notes-input" appearance="fill">
+        <mat-label>NOTES</mat-label>
+        <input matInput [value]="selectedNotesLabel" readonly aria-label="Notas seleccionadas">
+      </mat-form-field>
+
       <mat-button-toggle-group class="mode-selector"
                                [value]="uiService.selectedMode$ | async"
                                (change)="uiService.setSelectedMode($event.value)">
@@ -55,6 +60,32 @@
           PIANO
         </mat-button-toggle>
       </mat-button-toggle-group>
+
+      <mat-button-toggle-group
+        class="playback-instrument-toggle"
+        [value]="playbackInstrument"
+        (change)="onPlaybackInstrumentChange($event.value)"
+        aria-label="Instrumento de reproducción">
+        <mat-button-toggle value="guitar" aria-label="Sonido de guitarra">🎸</mat-button-toggle>
+        <mat-button-toggle value="piano" aria-label="Sonido de piano">🎹</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-form-field class="bpm-input" appearance="fill">
+        <mat-label>BPM</mat-label>
+        <input matInput type="number" min="40" max="240" [(ngModel)]="playbackBpm" (change)="onBpmChange()">
+      </mat-form-field>
+      <button mat-icon-button (click)="togglePlaybackLoop()" [color]="playbackLoop ? 'accent' : undefined" aria-label="Activar o desactivar loop">
+        <mat-icon>repeat</mat-icon>
+      </button>
+      <button *ngIf="!isPlaying"
+              mat-icon-button
+              (click)="playCurrentSelection()"
+              aria-label="Reproducir notas activas">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button *ngIf="isPlaying" mat-icon-button (click)="stopPlayback()" aria-label="Detener reproducción">
+        <mat-icon>stop</mat-icon>
+      </button>
 
       <button mat-icon-button
               (click)="toggleDarkTheme()"

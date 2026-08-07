@@ -35,8 +35,20 @@
   margin-right: 8px;
 }
 
+.bpm-input {
+  width: 72px;
+  margin-top: 20px;
+  margin-right: 4px;
+}
+
+.selected-notes-input {
+  width: 170px;
+  margin-right: 8px;
+}
+
 .mode-selector,
-.instrument-selector {
+.instrument-selector,
+.playback-instrument-toggle {
   margin-right: 8px;
 }
 
@@ -46,12 +58,26 @@
   display: none;
 }
 
+:host ::ng-deep .selected-notes-input .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
 :host ::ng-deep .mode-selector .mat-button-toggle {
   height: 36px;
 }
 
 :host ::ng-deep .instrument-selector .mat-button-toggle {
   height: 36px;
+}
+
+:host ::ng-deep .playback-instrument-toggle .mat-button-toggle {
+  height: 36px;
+}
+
+:host ::ng-deep .playback-instrument-toggle .mat-button-toggle-label-content {
+  line-height: 36px;
+  padding: 0 10px;
+  font-size: 13px;
 }
 
 :host ::ng-deep .instrument-selector .mat-button-toggle-label-content {
