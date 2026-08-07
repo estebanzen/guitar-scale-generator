@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
+import { CHORD_TYPES } from 'src/app/common/chord-types';
+import { SCALE_TYPES } from 'src/app/common/scale-types';
 
 @Component({
   selector: 'app-scales',
@@ -115,7 +117,7 @@ export class ScalesComponent implements OnInit {
 
   selectedMode: 'scales' | 'chords' = 'scales';
 
-  chordTypes = [
+  legacyChordTypes = [
     {
       name: 'Major',
       shortName: 'maj',
@@ -178,28 +180,16 @@ export class ScalesComponent implements OnInit {
     },
   ];
 
+  chordTypes = CHORD_TYPES;
   selectedChordType: any = null;
   selectedScaleType: string | null = null;
-  scaleTypes = [
-    { id: 'major', intervals: [0, 2, 4, 5, 7, 9, 11] },
-    { id: 'minor', intervals: [0, 2, 3, 5, 7, 8, 10] },
-    { id: 'majorPentatonic', intervals: [0, 2, 4, 7, 9] },
-    { id: 'minorPentatonic', intervals: [0, 3, 5, 7, 10] },
-    { id: 'blues', intervals: [0, 3, 5, 6, 7, 10] },
-    { id: 'ionian', intervals: [0, 2, 4, 5, 7, 9, 11] },
-    { id: 'dorian', intervals: [0, 2, 3, 5, 7, 9, 10] },
-    { id: 'phrygian', intervals: [0, 1, 3, 5, 7, 8, 10] },
-    { id: 'lydian', intervals: [0, 2, 4, 6, 7, 9, 11] },
-    { id: 'mixolydian', intervals: [0, 2, 4, 5, 7, 9, 10] },
-    { id: 'aeolian', intervals: [0, 2, 3, 5, 7, 8, 10] },
-    { id: 'locrian', intervals: [0, 1, 3, 5, 6, 8, 10] },
-  ];
+
+  scaleTypes = SCALE_TYPES;
 
   //#endregion vars
 
   //#region methods
   constructor(private uiService: UiService) {
-    console.clear();
     var t = this;
 
     t.diapasonConstructor();
@@ -209,7 +199,9 @@ export class ScalesComponent implements OnInit {
   ngOnInit() {
     this.restoreState();
     this.uiService.setSelectedMode(this.selectedMode);
-    this.uiService.setRootNote(this.noteRootValue ?? null);
+    queueMicrotask(() =>
+      this.uiService.setRootNote(this.noteRootValue ?? null),
+    );
     this.uiService.setSelectedChordType(
       this.selectedChordType?.shortName ?? null,
     );
@@ -237,21 +229,21 @@ export class ScalesComponent implements OnInit {
       }
     });
 
-		this.uiService.selectedScaleType$.subscribe((scaleId) => {
+    this.uiService.selectedScaleType$.subscribe((scaleId) => {
       if (scaleId && scaleId !== this.selectedScaleType) {
         this.selectScaleType(scaleId);
       }
-		});
+    });
 
-		this.uiService.showGuitar$.subscribe((isVisible) => {
-			this.showGuitar = isVisible;
-			this.saveState();
-		});
+    this.uiService.showGuitar$.subscribe((isVisible) => {
+      this.showGuitar = isVisible;
+      this.saveState();
+    });
 
-		this.uiService.showPiano$.subscribe((isVisible) => {
-			this.showPiano = isVisible;
-			this.saveState();
-		});
+    this.uiService.showPiano$.subscribe((isVisible) => {
+      this.showPiano = isVisible;
+      this.saveState();
+    });
   }
 
   renderPuntitosGuitarClassCss(nroTraste: number) {
@@ -347,7 +339,26 @@ export class ScalesComponent implements OnInit {
   }
 
   updateGuitarLabel() {
-    this.uiService.setGuitarLabel(this.getChordLabel());
+    const label = this.getChordLabel() || this.getScaleLabel();
+    setTimeout(() => this.uiService.setGuitarLabel(label));
+  }
+
+  getScaleLabel(): string {
+    if (
+      this.selectedMode !== 'scales' ||
+      !this.selectedScaleType ||
+      this.noteRootValue === undefined ||
+      this.noteRootValue === null
+    ) {
+      return '';
+    }
+
+    const scale = this.scaleTypes.find(
+      (item) => item.id === this.selectedScaleType,
+    );
+    return scale
+      ? `${this.notes[this.noteRootValue].noteStr}${scale.shortName}`
+      : '';
   }
 
   private saveState() {
@@ -362,6 +373,7 @@ export class ScalesComponent implements OnInit {
       ...(this.selectedMode === 'chords'
         ? { selectedChordType: this.selectedChordType?.shortName }
         : {
+            selectedScaleType: this.selectedScaleType,
             activeNoteIndices: this.notes
               .map((note, index) => (note.active ? index : -1))
               .filter((index) => index >= 0),
@@ -428,6 +440,14 @@ export class ScalesComponent implements OnInit {
 
       if (
         this.selectedMode === 'scales' &&
+        typeof state.selectedScaleType === 'string' &&
+        this.scaleTypes.some((scale) => scale.id === state.selectedScaleType)
+      ) {
+        this.selectedScaleType = state.selectedScaleType;
+      }
+
+      if (
+        this.selectedMode === 'scales' &&
         Array.isArray(state.activeNoteIndices)
       ) {
         const activeNoteIndices = new Set(
@@ -472,6 +492,7 @@ export class ScalesComponent implements OnInit {
     this.selectedScaleType = scaleId;
     this.applyScale();
     this.uiService.setSelectedScaleType(scaleId);
+    this.updateGuitarLabel();
     this.saveState();
   }
 
@@ -524,6 +545,7 @@ export class ScalesComponent implements OnInit {
       this.updateGuitarLabel();
     } else if (this.selectedScaleType) {
       this.applyScale();
+      this.updateGuitarLabel();
     }
     this.saveState();
   }
@@ -601,7 +623,8 @@ export class ScalesComponent implements OnInit {
       return;
     }
 
-    const singleActiveNote = activeIndices.length === 1 ? activeIndices[0] : null;
+    const singleActiveNote =
+      activeIndices.length === 1 ? activeIndices[0] : null;
     if (singleActiveNote !== null) {
       this.noteRootValue = singleActiveNote;
       this.notes.forEach((note, index) => {
@@ -635,6 +658,7 @@ export class ScalesComponent implements OnInit {
     );
     this.selectedScaleType = scale?.id ?? null;
     this.uiService.setSelectedScaleType(this.selectedScaleType);
+    this.updateGuitarLabel();
     if (singleActiveNote !== null) {
       this.uiService.setRootNote(singleActiveNote);
     }

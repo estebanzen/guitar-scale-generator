@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UiService } from './services/ui.service';
+import { CHORD_TYPES } from './common/chord-types';
+import { SCALE_TYPES } from './common/scale-types';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,8 @@ export class AppComponent implements OnInit {
 
   isDarkTheme = false;
   notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  chordTypes = [
+  /* Legacy chord list retained only for migration. */
+  legacyChordTypes = [
     { name: 'Major', shortName: 'maj' },
     { name: 'Minor', shortName: 'min' },
     { name: 'Dominant 7th', shortName: '7' },
@@ -24,20 +27,8 @@ export class AppComponent implements OnInit {
     { name: 'Suspended 4th', shortName: 'sus4' },
     { name: 'Suspended 2nd', shortName: 'sus2' },
   ];
-  scaleTypes = [
-    { id: 'major', name: 'Major' },
-    { id: 'minor', name: 'Minor' },
-    { id: 'majorPentatonic', name: 'Major Pentatonic' },
-    { id: 'minorPentatonic', name: 'Minor Pentatonic' },
-    { id: 'blues', name: 'Blues' },
-    { id: 'ionian', name: 'Ionian (Major)' },
-    { id: 'dorian', name: 'Dorian' },
-    { id: 'phrygian', name: 'Phrygian' },
-    { id: 'lydian', name: 'Lydian' },
-    { id: 'mixolydian', name: 'Mixolydian' },
-    { id: 'aeolian', name: 'Aeolian (Minor)' },
-    { id: 'locrian', name: 'Locrian' },
-  ];
+  chordTypes = CHORD_TYPES;
+  scaleTypes = SCALE_TYPES;
   visibleInstruments = ['guitar', 'piano'];
 
   constructor(public uiService: UiService) {}
