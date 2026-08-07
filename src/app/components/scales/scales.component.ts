@@ -9,7 +9,6 @@ import { SCALE_TYPES } from 'src/app/common/scale-types';
   styleUrls: ['./scales.component.scss'],
 })
 export class ScalesComponent implements OnInit {
-  private readonly stateStorageKey = 'guitar-tools-state';
 
   //#region vars
 
@@ -380,18 +379,13 @@ export class ScalesComponent implements OnInit {
           }),
     };
 
-    localStorage.setItem(this.stateStorageKey, JSON.stringify(state));
+    this.uiService.updateState(state);
   }
 
   private restoreState() {
-    const savedState = localStorage.getItem(this.stateStorageKey);
-    if (!savedState) {
-      return;
-    }
-
-    try {
-      const state = JSON.parse(savedState);
+      const state = this.uiService.getState();
       if (
+        typeof state.noteRootValue === 'number' &&
         Number.isInteger(state.noteRootValue) &&
         state.noteRootValue >= 0 &&
         state.noteRootValue < this.notes.length
@@ -471,10 +465,6 @@ export class ScalesComponent implements OnInit {
           }
         });
       }
-    } catch {
-      localStorage.removeItem(this.stateStorageKey);
-    }
-
     this.diapasonConstructor();
     this.pianoConstructor();
   }

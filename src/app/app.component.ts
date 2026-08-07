@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   constructor(public uiService: UiService) {}
 
   ngOnInit() {
-    this.isDarkTheme = localStorage.getItem('theme') === 'dark';
+    this.isDarkTheme = this.uiService.getState().theme === 'dark';
     this.applyTheme();
     this.uiService.showGuitar$.subscribe((isVisible) => {
       this.setInstrumentVisibility('guitar', isVisible);
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   toggleDarkTheme() {
     this.isDarkTheme = !this.isDarkTheme;
     this.applyTheme();
-    localStorage.setItem('theme', this.isDarkTheme ? 'dark' : 'light');
+    this.uiService.setTheme(this.isDarkTheme ? 'dark' : 'light');
   }
 
   private applyTheme() {
